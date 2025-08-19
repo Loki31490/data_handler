@@ -8,16 +8,15 @@ pub struct Database {
 
 impl Database {
     pub fn from(path: PathBuf) -> Self {
-        trace!("\nnew database from path:\n{:?}", &path);
+        trace!("\nNEW DATABASE\nfrom path: {:?}", &path);
         Self { path: path }
     }
 
     pub fn print_db(&self) {
         let conn = Connection::open(&self.path);
         match conn {
-            
-            Ok(ok) => info!("\nConnection granted\n{ok:?}"),
-            Err(e) => error!("\nConnection not granted\n{e}"),
+            Ok(ok) => info!("\nCONNECTION GRANTED\n{ok:?}"),
+            Err(e) => error!("\nCONNECTION NOT GRANTED\n{e}"),
         }
     }
 }
