@@ -26,11 +26,13 @@ impl Database {
     pub fn insert_to_table(self, table: &str, column: &str, content: &str) -> Result<(), Error> {
         let conn = Connection::open(&self.path)?;
         let stmt = conn.execute(
-            "
-            INSERT INTO test_table (name)
-            VALUES (?3)
-",
-            params![table, column, content],
+            &format!(
+                "
+            INSERT INTO {table} ({column})
+            VALUES (?1)
+"
+            ),
+            params![content],
         )?;
         Ok(())
     }
