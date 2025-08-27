@@ -1,5 +1,5 @@
-// Mod Import
+// Import
 pub mod database;
 
-// Re-export
+// Shortcut
 pub use database::Database;

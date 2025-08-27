@@ -5,6 +5,8 @@ use std::path::PathBuf;
 mod db_handler;
 use db_handler::Database;
 
+use crate::db_handler::database::Tables;
+
 fn main() -> Result<(), Error> {
     env_logger::init();
     //trace!("trace"); PRIORITY = 4
@@ -13,7 +15,7 @@ fn main() -> Result<(), Error> {
     //error!("error"); PRIORITY = 1
 
     let path = PathBuf::from("/home/baptiste/Documents/Rust/data_handler/data/my_data.db3");
-    let database = Database::new(path);
-    database.insert_to_table("test_table", "name", "Joe Danger")?;
+    let my_database = Database::new(path);
+    my_database.insert_to_table(Tables::table(Tables::TestTable), "name", "Joe Danger")?;
     Ok(())
 }
