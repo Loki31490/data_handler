@@ -1,11 +1,11 @@
 #![allow(unused_variables)]
 
-use rusqlite::{Error, Result};
-use std::path::PathBuf;
 mod db_handler;
 use db_handler::Database;
+use db_handler::Tables;
 
-use db_handler::tables::Tables;
+use rusqlite::{Error, Result};
+use std::path::PathBuf;
 
 fn main() -> Result<(), Error> {
     env_logger::init();

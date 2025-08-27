@@ -2,5 +2,6 @@
 pub mod database;
 pub mod tables;
 
-// Shortcut
+// Re-export
 pub use database::Database;
+pub use tables::Tables;
