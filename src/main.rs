@@ -5,7 +5,7 @@ use std::path::PathBuf;
 mod db_handler;
 use db_handler::Database;
 
-use crate::db_handler::database::Tables;
+use db_handler::tables::Tables;
 
 fn main() -> Result<(), Error> {
     env_logger::init();
