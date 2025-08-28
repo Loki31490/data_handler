@@ -3,30 +3,30 @@ use rusqlite::{Connection, Error, Result, params};
 use std::path::PathBuf;
 
 pub struct Database {
-    path: PathBuf,
+    pub path: PathBuf,
 }
 
 impl Database {
     //create a table
-    pub fn new(db_path: PathBuf) -> Self {
-        let conn = Connection::open(&db_path).expect("connection not granted");
+    pub fn new(db_path: &PathBuf) -> Self {
+        let conn = Connection::open(db_path).expect("connection not granted");
         let stmt = conn.execute(
-            &format!(
-                "
+            "
         CREATE TABLE IF NOT EXISTS test_table (
         id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL)"
-            ),
+        name TEXT NOT NULL)",
             (),
         );
         match stmt {
             Ok(num) => info!("\nNew test_table created at path: {:?}", &db_path),
             Err(e) => error!("'{e}'"),
         }
-        Self { path: db_path }
+        Self {
+            path: PathBuf::from(db_path),
+        }
     }
     pub fn insert_to_table(
-        self,
+        &self,
         table_name: &str,
         column_name: &str,
         content: &str,
