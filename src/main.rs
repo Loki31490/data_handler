@@ -1,6 +1,7 @@
 #![allow(unused_variables)]
 
 mod db_handler;
+use Tables::*;
 use db_handler::Database;
 use db_handler::Tables;
 
@@ -15,6 +16,7 @@ fn main() -> Result<(), Error> {
     //info!("info"); PRIORITY = 3
     //warn!("warn"); PRIORITY = 2
     //error!("error"); PRIORITY = 1
+
     println!("Enter name : ");
     let user_input1: String = read!("{}");
     println!("Enter last name : ");
@@ -23,8 +25,6 @@ fn main() -> Result<(), Error> {
 
     let path = PathBuf::from("/home/baptiste/Documents/Rust/data_handler/data/my_data.db3");
     let my_database = Database::new(&path);
-    my_database.insert_to_table(Tables::table(Tables::TestTable), "name", &full_name)?;
-
-    println!("{}", &my_database.path.display());
+    my_database.insert_to_table(Tables::table(TestTable), "name", &full_name)?;
     Ok(())
 }
