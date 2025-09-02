@@ -1,0 +1,109 @@
+Table entity [headercolor: #e7b2ed] {
+	entity_id integer [ pk, increment, not null, unique ]
+	entity_name varchar(255)
+	entity_manager varchar(255)
+	entity_tel varchar(255)
+	entity_mail varchar(255)
+
+	Note: '''Entitées du groupe RMC | BFM'''
+}
+
+Table collaborator [headercolor: #9f54ab] {
+	collaborator_id integer [ pk, increment, not null, unique ]
+	entity_id integer
+	collaborator_firstName varchar(255)
+	collaborator_lastName varchar(255)
+	collaborator_tel varchar(255)
+	collaborator_mail varchar(255) [ default: 'email@rmcbfm.com' ]
+
+	Note: '''Tout les employées de l''entreprise'''
+}
+
+Table user [headercolor: #2aa5de] {
+	user_id integer [ pk, increment, not null, unique ]
+	collaborator_id integer
+  role varchar(255)
+
+	Note: '''Le STAFF fait vérifie le stock et fourni l''utilisateur'''
+}
+
+Table movement [headercolor: #f02e0c] {
+	movement_id integer [ pk, increment, not null, unique ]
+	user_id varchar(255) [ not null ]
+	product_id integer [ not null ]
+	collaborator_id varchar(255) [ not null ]
+	quantity_involved integer [ not null, default: 1 ]
+	date_of_event timestamp [ not null, default: `DATETIME('now')` ]
+
+	Note: '''Table intermédiaire:
+Permet de consigner tout les entrées/sorties de matériels:
+quand, par qui, à qui'''
+}
+
+Table stock [headercolor: #627173] {
+	stock_id integer [ pk, increment, not null, unique ]
+	product_id integer [ not null, unique ]
+	quantity_in_stock integer [ not null, default: 0 ]
+	quantity_min integer [ not null, default: 0, note: 'quantité minimum avant alerte de rachat' ]
+
+	Note: '''Gère les références matériels et leur quantité en temps réel'''
+}
+
+Table product [headercolor: #eddb0e] {
+	product_id integer [ pk, increment, not null, unique ]
+	product_price integer [ not null ]
+	product_model varchar(255) [ not null, unique ]
+	product_supplier integer
+	product_manufacturer integer
+
+	Note: '''Fiche produit d''un matériel'''
+}
+
+Table supplier [headercolor: #9820c7] {
+	supplier_id integer [ pk, increment, not null, unique ]
+	supplier_name varchar(255) [ unique ]
+	supplier_contact_name varchar(255)
+	supplier_contact_tel varchar(255)
+	supplier_contact_mail varchar(255)
+
+	Note: '''Fiche fournisseur, pour savoir à qui on l''à acheté, pour recommander ou faire une'''
+}
+
+Table manufacturer [headercolor: #d4317d] {
+	manufacturer_id integer [ pk, increment, not null, unique ]
+	manufacturer_name varchar(255) [ unique ]
+
+	Note: '''Information sur le constructeur, utile pour savoir qui contacter pour SAV, pièce de rechange,...'''
+}
+
+Ref user_to_movement {
+	movement.user_id > user.user_id [ delete: no action, update: no action ]
+}
+
+Ref collaborator_into_movement {
+	movement.collaborator_id > collaborator.collaborator_id [ delete: no action, update: no action ]
+}
+
+Ref manufacturer_into_product {
+	product.product_manufacturer > manufacturer.manufacturer_id [ delete: no action, update: no action ]
+}
+
+Ref supplier_into_product {
+	product.product_supplier > supplier.supplier_id [ delete: no action, update: no action ]
+}
+
+Ref product_into_stock {
+	stock.product_id > product.product_id [ delete: no action, update: no action ]
+}
+
+Ref collaborator_into_user {
+	user.collaborator_id - collaborator.collaborator_id [ delete: no action, update: no action ]
+}
+
+Ref entity_into_collaborator {
+	entity.entity_id < collaborator.entity_id [ delete: no action, update: no action ]
+}
+
+Ref product_to_movement {
+  product.product_id < movement.product_id [ delete: no action, update: no action ]
+}
