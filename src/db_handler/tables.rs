@@ -1,6 +1,7 @@
 #[allow(unused_imports)]
 use Tables::*;
 
+
 #[allow(dead_code)]
 pub enum Tables {
     TestTable,
@@ -13,6 +14,7 @@ pub enum Tables {
     CategoryTable,
 }
 
+// Associations enum/values
 impl Tables {
     // Return the name of the choosen table as a str
     pub fn table(table: Tables) -> &'static str {
