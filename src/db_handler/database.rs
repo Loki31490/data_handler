@@ -4,6 +4,7 @@ use std::path::PathBuf;
 
 use crate::db_handler::TableHandler;
 
+#[derive(Default)]
 pub struct Database {
     pub path: PathBuf,
 }

@@ -1,10 +1,19 @@
-use egui_extras::{self, Column, TableBuilder};
+use egui_extras::{Column, TableBuilder};
 
-pub struct MyApp {}
+#[derive(Default)]
+pub struct Appstate(String);
+
+pub struct MyApp {
+    state: Appstate,
+    database: crate::db_handler::Database,
+}
 
 impl MyApp {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        Self {}
+        Self {
+            state: Appstate::default(),
+            database: crate::db_handler::Database::default(),
+        }
     }
 }
 

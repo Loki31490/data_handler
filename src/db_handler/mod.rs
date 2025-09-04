@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 // Import
 pub mod database;
 pub mod tables;
