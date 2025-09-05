@@ -5,7 +5,7 @@ Table entity [headercolor: #e7b2ed] {
 	entity_tel varchar(255)
 	entity_mail varchar(255)
 
-	Note: '''Entitées du groupe RMC | BFM'''
+	Note: '''Toutes les entités de RMC|BFM'''
 }
 
 Table collaborator [headercolor: #9f54ab] {
@@ -16,7 +16,7 @@ Table collaborator [headercolor: #9f54ab] {
 	collaborator_tel varchar(255)
 	collaborator_mail varchar(255) [ default: 'email@rmcbfm.com' ]
 
-	Note: '''Tout les employées de l''entreprise'''
+	Note: '''Tout les employés de RMC|BFM avec lesquels nous sommes amenés à travailler'''
 }
 
 Table user [headercolor: #2aa5de] {
@@ -24,20 +24,18 @@ Table user [headercolor: #2aa5de] {
 	collaborator_id integer
   role varchar(255)
 
-	Note: '''Le STAFF fait vérifie le stock et fourni l''utilisateur'''
+	Note: '''Tout les collaborateurs ayant le droit d'utiliser le logiciel'''
 }
 
 Table movement [headercolor: #f02e0c] {
 	movement_id integer [ pk, increment, not null, unique ]
 	user_id varchar(255) [ not null ]
-	product_id integer [ not null ]
 	collaborator_id varchar(255) [ not null ]
+	product_id integer [ not null ]
 	quantity_involved integer [ not null, default: 1 ]
 	date_of_event timestamp [ not null, default: `DATETIME('now')` ]
 
-	Note: '''Table intermédiaire:
-Permet de consigner tout les entrées/sorties de matériels:
-quand, par qui, à qui'''
+	Note: '''Garde en mémoire toutes les demandes faites par les users a la database'''
 }
 
 Table stock [headercolor: #627173] {
@@ -46,7 +44,7 @@ Table stock [headercolor: #627173] {
 	quantity_in_stock integer [ not null, default: 0 ]
 	quantity_min integer [ not null, default: 0, note: 'quantité minimum avant alerte de rachat' ]
 
-	Note: '''Gère les références matériels et leur quantité en temps réel'''
+	Note: '''L'état du stock en direct'''
 }
 
 Table product [headercolor: #eddb0e] {
